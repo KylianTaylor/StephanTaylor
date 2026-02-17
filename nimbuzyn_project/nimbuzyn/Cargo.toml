@@ -1,0 +1,79 @@
+[package]
+name = "nimbuzyn"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "nimbuzyn"
+crate-type = ["cdylib"]
+
+[[bin]]
+name = "nimbuzyn"
+path = "src/main.rs"
+
+[dependencies]
+# UI Framework
+egui = { version = "0.27", features = ["default"] }
+eframe = { version = "0.27", default-features = false, features = [
+    "android-native-activity",
+    "glow",
+] }
+egui_extras = { version = "0.27", features = ["image", "file"] }
+
+# Database
+rusqlite = { version = "0.31", features = ["bundled"] }
+
+# Encryption / Hashing
+argon2 = "0.5"
+aes-gcm = "0.10"
+base64 = "0.22"
+rand = "0.8"
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Utilities
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+log = "0.4"
+android_logger = "0.14"
+anyhow = "1"
+
+# File handling
+mime = "0.3"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[package.metadata.android]
+package = "com.nimbuzyn.app"
+label = "Nimbuzyn"
+min_sdk_version = 26
+target_sdk_version = 34
+resources = "res"
+assets = "assets"
+
+[package.metadata.android.sdk]
+min_sdk_version = 26
+target_sdk_version = 34
+compile_sdk_version = 34
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.INTERNET"
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.READ_EXTERNAL_STORAGE"
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.WRITE_EXTERNAL_STORAGE"
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.READ_MEDIA_IMAGES"
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.READ_MEDIA_VIDEO"
